@@ -26,7 +26,7 @@ class ShortUrlApiIntegrationTest {
     void createsRedirectsAndTracksAnalytics() throws Exception {
         String body = mockMvc.perform(post("/api/urls")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("""{"originalUrl":"https://example.com/docs"}"""))
+                        .content("{\"originalUrl\":\"https://example.com/docs\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.code").isNotEmpty())
                 .andReturn().getResponse().getContentAsString();
@@ -49,7 +49,7 @@ class ShortUrlApiIntegrationTest {
     void rejectsDangerousSchemes() throws Exception {
         mockMvc.perform(post("/api/urls")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("""{"originalUrl":"javascript:alert(1)"}"""))
+                        .content("{\"originalUrl\":\"javascript:alert(1)\"}"))
                 .andExpect(status().isBadRequest());
     }
 
